@@ -9,13 +9,21 @@ class Client extends Model
 {
     use HasFactory;
 
-    protected $table = 'clients';
-    protected $fillable = ['name', 'email', 'address', 'phone'];
-    protected $guarded = ['id', 'created_at', 'updated_at'];
+    public $timestamps = false;
+
+    protected $fillable = [
+        'name',
+        'photo',
+        'address',
+        'city',
+        'phone',
+        'email',
+    ];
+
+    protected $guarded = ['id'];
 
     public function orders()
     {
         return $this->hasMany(Order::class);
     }
-    
 }
