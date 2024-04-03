@@ -4,7 +4,8 @@
     <div class="register-box">
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <a href="../../index2.html" class="h1"><b>Panadería</b></a>
+                <span class="h1"><b>Panadería</b></span>
+                <img src="{{asset('backend/dist/img/pan-logo.png')}}" class="rounded-circle" alt="" style="width:70%; padding:10px  ">
             </div>
             <div class="card-body">
                 <p class="login-box-msg">Register a new membership</p>
