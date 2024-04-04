@@ -12,6 +12,9 @@ return new class extends Migration {
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->string('date');
+            $table->string('order');
+            $table->decimal('total');
 
             $table->unsignedBigInteger('client_id');
             $table->foreign('client_id')
