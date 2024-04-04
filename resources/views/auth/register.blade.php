@@ -53,7 +53,7 @@
                         <!-- /.col -->
                         <div class="col-12">
                             <button type="submit" class="btn btn-primary btn-block">
-                                {{ __('Register') }}
+                                {{ __('Registrarme') }}
                             </button>
                         </div>
                         <!-- /.col -->
