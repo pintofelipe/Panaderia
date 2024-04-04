@@ -8,7 +8,7 @@
                 <img src="{{asset('backend/dist/img/pan-logo.png')}}" class="rounded-circle" alt="" style="width:70%; padding:10px  ">
             </div>
             <div class="card-body">
-                <p class="login-box-msg">Register a new membership</p>
+                <p class="login-box-msg">Registrar nuevo usuario</p>
 
                 <form method="POST" action="{{ route('register') }}">
                     @csrf
@@ -33,7 +33,7 @@
                     </div>
                     <div class="input-group mb-3">
                         <input type="password" class="form-control @error('password') is-invalid @enderror" name="password"
-                            required autocomplete="new-password" placeholder="Password">
+                            required autocomplete="new-password" placeholder="Contraseña">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -41,7 +41,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control" placeholder="Retype password"
+                        <input type="password" class="form-control" placeholder="Repetir contraseña"
                             name="password_confirmation" required autocomplete="new-password">
                         <div class="input-group-append">
                             <div class="input-group-text">
@@ -60,7 +60,7 @@
                     </div>
                 </form>
 
-                <a href="login" class="text-center">I already have a membership</a>
+                <a href="login" class="text-center">Ya tengo una cuenta</a>
             </div>
             <!-- /.form-box -->
         </div><!-- /.card -->
