@@ -20,8 +20,8 @@ class ProductFactory extends Factory
             'name'=>$this->faker->colorName,
             'description' => $this->faker->sentence, 
             'price'=>$this->faker->randomFloat(2,0,1000),
+            'image' => $this->faker->imageUrl(), // Genera una URL aleatoria para una imagen
             'provider_id'=>\App\Models\Provider::factory(), 
-
         ];
     }
 }
