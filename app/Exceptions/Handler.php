@@ -4,6 +4,9 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use App\Exceptions\NotFoundHttpException;
+
+
 
 class Handler extends ExceptionHandler
 {
@@ -26,5 +29,14 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof NotFoundHttpException) {
+            return $exception->render($request);
+        }
+
+        return parent::render($request, $exception);
     }
 }
