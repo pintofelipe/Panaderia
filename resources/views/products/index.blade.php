@@ -1,44 +1,44 @@
 @extends('layouts.app')
-
-@section('title','Data tables')
+@section('tittle', 'Listado de productos')
 
 @section('content')
-    <div class=content-wrapper>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        <!-- <section class="content-header">
+        <section class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1>@yield('title')</h1>	
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">DataTables</li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </section> -->
+                 
+                    @include('layouts.partial.msg')
+       
+                  </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                            <h3>@yield('title')</h3>
-                                <a href="{{ route('products.create') }}" class="btn btn-primary float-right" title="Nuevo"><i class="fas fa-plus nav-icon"></i></a>
+                                <h3 class="card-title text-lg">@yield('tittle')</h3>
+
+                                <a href="{{ route('products.create') }}" class="btn btn-primary float-right"><i
+                                        class="fas fa-plus nav-icon"></i></a>
+
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="products-table" class="table table-bordered table-hover">
-                                    <thead>
+                                <table id="example1" class="table table-bordered table-hover">
+                                    <thead class="text-primary">
                                         <tr>
-                                            <th>Indentifier</th>
-                                            <th>Product</th>
+                                            <th width="10px">ID</th>
+                                            <th>Name</th>
+                                            <th>Description</th>
                                             <th>Image</th>
                                             <th>Price</th>
-                                            <th>Quantity</th>
+                                            <th>Stock</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -47,91 +47,104 @@
                                             <tr>
                                                 <td>{{ $product->id }}</td>
                                                 <td>{{ $product->name }}</td>
-                                                <td>{{ $product->image }}</td>
+                                                <td>{{ $product->description }}</td>
+                                                <td>
+                                                    @if ($product->image != null)
+                                                        <center>
+                                                            <p><img class="img-responsive img-thumbnail"
+                                                                    src="{{ asset('uploads/products/' . $product->image) }}"
+                                                                    style="height: 70px; width: 70px;" alt=""></p>
+                                                        </center>
+                                                    @elseif ($product->image == null)
+                                                    @endif
+                                                </td>
                                                 <td>{{ $product->price }}</td>
                                                 <td>{{ $product->quantity }}</td>
                                                 <td>
-                                                    {{-- @can('products.edit') --}}
                                                     <a href="{{ route('products.edit', $product->id) }}"
-                                                        class="btn btn-info btn-sm" title=Edit>
+                                                        class="btn btn-info btn-sm" tittle="Editar">
                                                         <i class="fas fa-pencil-alt"></i>
                                                     </a>
-                                                    {{-- @endcan --}}
-                                                    <form class="d-inline-delete-form"
+                                                    <form class="d-inline delete-form"
                                                         action="{{ route('products.destroy', $product) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm" title="Delete">
+                                                        <button type="submit" class="btn btn-danger btn-sm"
+                                                            tittle="Eliminar">
                                                             <i class="fas fa-trash-alt"></i>
                                                         </button>
                                                     </form>
-                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th>Indentifier</th>
-                                            <th>Product</th>
+                                            <th width="10px">ID</th>
+                                            <th>Name</th>
+                                            <th>Description</th>
                                             <th>Image</th>
                                             <th>Price</th>
-                                            <th>Quantity</th>
+                                            <th>Stock</th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
                                 </table>
                             </div>
-                            <!-- /.card -->
+                            <!-- /.card-body -->
                         </div>
+                        <!-- /.card -->
 
+
+                        <!-- /.card-body -->
                     </div>
-                    <!-- /.col -->
+                    <!-- /.card -->
                 </div>
-                <!-- /.row -->
-
+                <!-- /.col -->
             </div>
-            <!-- /.container-fluid -->
-        </section>
+            <!-- /.row -->
     </div>
-
-    @push('scripts')
-        <script type="text/javascript">
-            $(function() {
-                $("#products-table").DataTable({
-                    "responsive": true,
-                    "lengthChange": true,
-                    "autoWidth": false,
-                    //"buttons": ["excel", "pdf", "print", "colvis"],
-                    "language": {
-                        "sLengthMenu": "Mostrar MENU entradas",
-                        "sEmptyTable": "No hay datos disponibles en la tabla",
-                        "sInfo": "Mostrando START a END de TOTAL entradas",
-                        "sInfoEmpty": "Mostrando 0 a 0 de 0 entradas",
-                        "sSearch": "Buscar:",
-                        "sZeroRecords": "No se encontraron registros coincidentes en la tabla",
-                        "sInfoFiltered": "(Filtrado de MAX entradas totales)",
-                        "oPaginate": {
-                            "sFirst": "Primero",
-                            "sPrevious": "First",
-                            "sNext": "Last",
-                            "sLast": "Ultimo"
-                        },
-                        /*"buttons": {
-                            "print": "Imprimir",
-                            "colvis": "Visibilidad Columnas"
-                            /*"create": "Nuevo",
-                            "edit": "Cambiar",
-                            "remove": "Borrar",
-                            "copy": "Copiar",
-                            "csv": "fichero CSV",
-                            "excel": "tabla Excel",
-                            "pdf": "documento PDF",
-                            "collection": "Colección",
-                            "upload": "Seleccione fichero...."
-                        }*/
-                    }
-                }); //.buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-            });
-        </script>
-    @endpush
+    <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+    </div>
 @endsection
+@push('scripts')
+    <script type="text/javascript">
+        $(function() {
+            $("#example1").DataTable({
+                "responsive": true,
+                "lengthChange": true,
+                "autoWidth": false,
+                //"buttons": ["excel", "pdf", "print", "colvis"],
+                "language": {
+                    "sLengthMenu": "Mostrar MENU entradas",
+                    "sEmptyTable": "No hay datos disponibles en la tabla",
+                    "sInfo": "Mostrando START a END de TOTAL entradas",
+                    "sInfoEmpty": "Mostrando 0 a 0 de 0 entradas",
+                    "sSearch": "Buscar:",
+                    "sZeroRecords": "No se encontraron registros coincidentes en la tabla",
+                    "sInfoFiltered": "(Filtrado de MAX entradas totales)",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sPrevious": "Anterior",
+                        "sNext": "Siguiente",
+                        "sLast": "Ultimo"
+                    },
+                    /*"buttons": {
+                    	"print": "Imprimir",
+                    	"colvis": "Visibilidad Columnas"
+                    	/*"create": "Nuevo",
+                    	"edit": "Cambiar",
+                    	"remove": "Borrar",
+                    	"copy": "Copiar",
+                    	"csv": "fichero CSV",
+                    	"excel": "tabla Excel",
+                    	"pdf": "documento PDF",
+                    	"collection": "Colección",
+                    	"upload": "Seleccione fichero...."
+                    }*/
+                }
+            }); //.buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        });
+    </script>
+@endpush
