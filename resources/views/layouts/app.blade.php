@@ -8,9 +8,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>{{ config('app.name', 'Laravel') }}</title>
-
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -41,9 +39,16 @@
     <link rel="stylesheet"
         href="{{ asset('backend/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
-  
-  
+    <link rel="stylesheet" href="{{asset('backend/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/css/bootstrap-toggle.css">
+
+    <!-- Select2 -->
+	<link rel="stylesheet" href="{{asset('backend/plugins/select2/css/select2.min.css')}}">
+	<link rel="stylesheet" href="{{asset('backend/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
+	<link rel="stylesheet" href="{{asset('backend/dist/css/select2.css')}}">
     <!-- Scripts -->
+
+
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     @stack('css')
 </head>
@@ -101,7 +106,12 @@
     <script src="{{ asset('backend/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('backend/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
     <script src="https://kit.fontawesome.com/b479edefa4.js" crossorigin="anonymous"></script>
+    <script src="{{asset('backend/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/js/bootstrap-toggle.js"></script>
 
+    <!-- Select2 -->
+	<script src="{{asset('backend/plugins/select2/js/select2.full.min.js')}}"></script>
+    
     @stack('scripts')
 </body>
 

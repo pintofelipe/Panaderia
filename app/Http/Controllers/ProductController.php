@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Support;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+
 
 
 class ProductController extends Controller
@@ -47,6 +49,8 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->price = $request->price;
         $product->quantity = $request->quantity;
+        $product->status = 1;
+        $product->registeredby= $request->user()->id;
         $product->save();
 
 
@@ -72,8 +76,16 @@ class ProductController extends Controller
     }
 
 
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
-        //
+       $product->delete();
+       return redirect()->route('products.index')->with('eliminar','ok');
     }
+
+    public function cambioestadoarl(Product $product)
+	{
+		$arl = Product::find($product->product_id);
+		$arl->estatus=$product->estatus;
+		$arl->save();
+	}
 }
