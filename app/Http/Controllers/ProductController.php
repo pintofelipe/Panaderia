@@ -50,7 +50,7 @@ class ProductController extends Controller
         $product->price = $request->price;
         $product->quantity = $request->quantity;
         $product->status = 1;
-        $product->registeredby= $request->user()->id;
+        $product->registered_by = $request->user()->id;
         $product->save();
 
 

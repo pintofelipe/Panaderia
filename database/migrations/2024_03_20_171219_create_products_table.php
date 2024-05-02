@@ -12,9 +12,12 @@ return new class extends Migration {
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+
             $table->string('name');
             $table->string('image')->nullable();
             $table->string('description')->nullable();
+            $table->string('registered_by')->nullable();
+            $table->string('status')->nullable();
             $table->decimal('price', 8, 2);
             $table->integer('quantity')->default(0)->nullable();
         
@@ -24,8 +27,7 @@ return new class extends Migration {
                 ->references('id')
                 ->on('providers');
 
-            $table->string('estatus');
-            $table->string('registeredby');
+    
         });
     }
 

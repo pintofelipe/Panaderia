@@ -19,13 +19,13 @@ class Product extends Model
         'quantity',
         'provider_id',
         'status',
-        'registeredby',
+        'registered_by',
     ];
 
     protected $guarded = [
         'id',
         'estatus',
-        'registeredby'
+        'registered_by'
 
     ];
 

@@ -24,7 +24,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('cambioestadoarl', [ProductController::class, 'cambioestadoarl'])->name('cambioestadoarl');
 
 Route::group(['middleware' => ['auth']], function () {
     // Control panel.
@@ -34,4 +33,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('orders', OrderController::class);
     Route::resource('products', ProductController::class);
     Route::resource('providers', ProviderController::class);
+
+    Route::get("changeproducturl", [ProductController::class, "changeproducturl"])->name("changeproducturl");
 });
