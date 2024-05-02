@@ -43,14 +43,14 @@ class ProductController extends Controller
         }
 
 
-        $product = new Product();
+       $product = new Product();
         $product->name = $request->name;
-        $product->image = $imagename;
         $product->description = $request->description;
         $product->price = $request->price;
-        $product->quantity = $request->quantity;
+        $product->amount = $request->amount;
+        $product->image = $imagename;
         $product->status = 1;
-        $product->registeredby= $request->user()->id;
+        $product->registerby = $request->user()->id;
         $product->save();
 
 
