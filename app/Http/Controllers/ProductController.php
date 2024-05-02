@@ -43,7 +43,7 @@ class ProductController extends Controller
         }
 
 
-       
+
         $product = new Product();
         $product->name = $request->name;
         $product->image = $imagename;
@@ -55,7 +55,7 @@ class ProductController extends Controller
         $product->save();
 
 
-        return redirect()->route("products.index")->with("success","Product successfully added.");
+        return redirect()->route("products.index")->with("success", "Product successfully added.");
     }
 
 
@@ -73,20 +73,45 @@ class ProductController extends Controller
 
     public function update(Request $request, string $id)
     {
-        //
+
+        $product = Product::find($id);
+
+        $image = $request->file('image');
+        $slug = str::slug($request->name);
+        if (isset($image)) {
+            $currentDate = Carbon::now()->toDateString();
+            $imagename = $slug . '-' . $currentDate . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
+
+            if (!file_exists('uploads/products')) {
+                mkdir('uploads/products', 0777, true);
+            }
+            $image->move('uploads/products', $imagename);
+        } else {
+            $imagename = $product->image;
+        }
+
+        $product->name = $request->name;
+        $product->image = $imagename;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->quantity = $request->quantity;
+        $product->registered_by = $request->user()->id;
+        $product->save();
+
+        return redirect()->route('products.index')->with('successMsg','El registro se actualizó exitosamente');
     }
 
 
     public function destroy(Product $product)
     {
-       $product->delete();
-       return redirect()->route('products.index')->with('eliminar','ok');
+        $product->delete();
+        return redirect()->route('products.index')->with('eliminar', 'ok');
     }
 
     public function cambioestadoarl(Product $product)
-	{
-		$arl = Product::find($product->product_id);
-		$arl->estatus=$product->estatus;
-		$arl->save();
-	}
+    {
+        $arl = Product::find($product->product_id);
+        $arl->estatus = $product->estatus;
+        $arl->save();
+    }
 }

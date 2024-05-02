@@ -26,7 +26,39 @@
 									<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
 										<div class="form-group label-floating">
 											<label class="control-label">Nombre <strong style="color:red;">(*)</strong></label>
-											<input type="text" class="form-control" name="nombre" placeholder="Por ejemplo, Positiva" autocomplete="off" value="{{ $product->name }}">
+											<input type="text" class="form-control" name="name" placeholder="Por ejemplo, Positiva" autocomplete="off" value="{{ $product->name }}">
+										</div>
+									</div>
+								</div>
+                                <div class="row">
+									<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+										<div class="form-group label-floating">
+											<label class="control-label">Descripción <strong style="color:red;">(*)</strong></label>
+											<input type="text" class="form-control" name="description" placeholder="Por ejemplo, Positiva" autocomplete="off" value="{{ $product->description }}">
+										</div>
+									</div>
+								</div>
+                                <div class="row">
+									<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+										<div class="form-group label-floating">
+											<label class="control-label">Precio <strong style="color:red;">(*)</strong></label>
+											<input type="text" class="form-control" name="price" placeholder="Por ejemplo, Positiva" autocomplete="off" value="{{ $product->price }}">
+										</div>
+									</div>
+								</div>
+                                <div class="row">
+									<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+										<div class="form-group label-floating">
+											<label class="control-label">cantidad <strong style="color:red;">(*)</strong></label>
+											<input type="text" class="form-control" name="quantity" placeholder="Por ejemplo, Positiva" autocomplete="off" value="{{ $product->quantity }}">
+										</div>
+									</div>
+								</div>
+                                <div class="row">
+									<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+										<div class="form-group label-floating">
+											<label class="control-label">Imagen <strong style="color:red;">(*)</strong></label>
+											<input type="text" class="form-control" name="image" placeholder="Por ejemplo, Positiva" autocomplete="off" value="{{ $product->image }}">
 										</div>
 									</div>
 								</div>
@@ -36,7 +68,7 @@
 								<div class="row">
 									<div class="col-lg-2 col-xs-4">
 										<button type="submit" class="btn btn-primary btn-block btn-flat">Registrar</button>
-                                        
+
 									</div>
 									<div class="col-lg-2 col-xs-4">
 										<a href="{{ route('products.index') }}" class="btn btn-danger btn-block btn-flat">Atras</a>
