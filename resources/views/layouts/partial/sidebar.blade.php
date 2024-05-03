@@ -46,10 +46,10 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="pages/charts/chartjs.html" class="nav-link">
-                                <i class="fa-solid fa-user nav-icon"></i>
-                                <p>Cliente</p>
+                    <li class="nav-item">
+                            <a href="{{ route('clients.index') }}" class="nav-link">
+                                <i class="fa-solid fa-bread-slice nav-icon"></i>
+                                <p>Client</p>
                             </a>
                         </li>
                         <li class="nav-item">

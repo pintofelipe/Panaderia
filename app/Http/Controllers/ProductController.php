@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductRequest;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\User;
@@ -26,7 +27,7 @@ class ProductController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
         $image = $request->file('image');
         $slug = str::slug($request->nombre);
@@ -71,7 +72,7 @@ class ProductController extends Controller
     }
 
 
-    public function update(Request $request, string $id)
+    public function update(ProductRequest $request, string $id)
     {
 
         $product = Product::find($id);

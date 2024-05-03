@@ -26,7 +26,6 @@ return new class extends Migration {
             $table->foreign('provider_id')
                 ->references('id')
                 ->on('providers');
-
     
         });
     }
