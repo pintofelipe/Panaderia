@@ -36,4 +36,5 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get("changeproducturl", [ProductController::class, "changeproducturl"])->name("changeproducturl");
     Route::get("changeclienturl", [ClientController::class, "changeclienturl"])->name("changeclienturl");
+    
 });

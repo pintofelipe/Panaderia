@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Http\OrderRequest;
 use App\Models\User;
 use App\Models\Client;
 use App\Models\Order;
+use App\Models\OrderDetail;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 
 
@@ -25,12 +28,44 @@ class OrderController extends Controller
         $clients = Client::where("status", '=', '1' )->orderBy('name')->get();
         $products = Product::where("status", '=', '1' )->orderBy('name')->get();
     
+        $fecha = Carbon ::now();
+        $fecha = $fecha->format('Y-m-d');
+
+        return view('orders.create', compact('clients','products','fecha'));
     }
 
     
-    public function store(Request $request)
+    public function store(OrderRequest $request)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+
+            $order = new Order();
+            $order->client_id = $request->client_id;
+            $order->dateOrder = $request->client_dateOrder;
+            $order->total = $request->total;
+            $order->status = 1;
+            $order->registered_by = $request->user()->id;
+            $order->route = $request->route;
+            $order = $order->save();
+
+            $idorder = $order->id;
+
+            $count=0;
+            while($count < count($idorder)) {
+                
+
+                $detailOrder ->save();
+                $count++;
+            }
+
+
+
+        } catch (\Exception $e) {
+            return redirect()->back()->with('SuccessMsg','Error al registrar la informacion');
+        }
+        
     }
 
     
@@ -46,7 +81,7 @@ class OrderController extends Controller
     }
 
    
-    public function update(Request $request, string $id)
+    public function update(OrderRequest $request, string $id)
     {
         //
     }
