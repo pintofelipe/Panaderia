@@ -16,6 +16,10 @@ return new class extends Migration {
             $table->string('order');
             $table->decimal('total');
 
+            $table->string('registered_by')->nullable();
+            $table->string('status')->nullable();
+            $table->string('router')->nullable();
+            
             $table->unsignedBigInteger('client_id');
             $table->foreign('client_id')
                 ->references('id')

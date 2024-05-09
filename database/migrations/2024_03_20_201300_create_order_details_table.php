@@ -20,10 +20,15 @@ return new class extends Migration {
                 ->references('id')
                 ->on('products');
 
+            
             $table->unsignedBigInteger('order_id');
             $table->foreign('order_id')
                 ->references('id')
                 ->on('orders');
+
+            $table->decimal('subtotal');
+            $table->decimal('total')->nullable();
+            $table->string('registered_by')->nullable();
         });
     }
 

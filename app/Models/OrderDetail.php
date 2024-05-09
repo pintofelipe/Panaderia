@@ -12,9 +12,13 @@ class OrderDetail extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'quantity',
         'product_id',
         'order_id',
+        'quantity',
+        'subtotal',
+        'registered_by',
+      
+        
     ];
 
     protected $guarded = ['id'];
@@ -27,3 +31,4 @@ class OrderDetail extends Model
         return $this->belongsTo(Order::class);
     }
 }
+

@@ -13,6 +13,10 @@ class Order extends Model
 
     protected $fillable = [
         'client_id',
+        'status',
+        'registered_by',
+        'total',
+        'router',
     ];
 
     protected $guarded = ['id'];
