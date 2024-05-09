@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('tittle', 'Listado de clientos')
+@section('tittle', 'List of clients')
 
 @section('content')
     <!-- Content Wrapper. Contains page content -->
@@ -36,13 +36,12 @@
                                             <th width="10px">ID</th>
                                             <th>Name</th>
                                             <th>Photo</th>
-                                            <th>address</th>
+                                            <th>Address</th>
                                             <th>City</th>
                                             <th>Phone</th>
                                             <th>Email</th>
-                                            <th>Document</th>
                                             <th>Status</th>
-                                            <th>registered_by</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -51,26 +50,27 @@
                                                 <td>{{ $client->id }}</td>
                                                 <td>{{ $client->name }}</td>
                                                 <td>
-                                                    @if ($client->image != null)
+                                                    @if ($client->photo != null)
                                                         <center>
                                                             <p><img class="img-responsive img-thumbnail"
-                                                                    src="{{ asset('uploads/clients/' . $client->image) }}"
+                                                                    src="{{ asset('uploads/clients/' . $client->photo) }}"
                                                                     style="height: 70px; width: 70px;" alt=""></p>
                                                         </center>
-                                                    @elseif ($client->image == null)
+                                                    @elseif ($client->photo == null)
+                                                        There is not photo.
                                                     @endif
                                                 </td>
+                                                <td>{{ $client->address }}</td>
+
                                                 <td>{{ $client->city }}</td>
                                                 <td>{{ $client->phone }}</td>
                                                 <td>{{ $client->email }}</td>
-                                                <td>{{ $client->document }}</td>
                                                 <td>
                                                     <input data-id="{{ $client->id }}" class="toggle-class"
                                                         type="checkbox" data-onstyle="success" data-offstyle="danger"
                                                         data-toggle="toggle" data-on="Active" data-off="Inactive"
                                                         {{ $client->status ? 'checked' : '' }}>
                                                 </td>
-                                                <td>{{ $client->register_by }}</td>
                                                 <td>
                                                     <a href="{{ route('clients.edit', $client->id) }}"
                                                         class="btn btn-info btn-sm" tittle="Editar">

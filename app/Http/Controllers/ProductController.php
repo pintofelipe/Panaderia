@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProductRequest;
 use Illuminate\Http\Request;
 use App\Models\Product;
-use App\Models\User;
-use Illuminate\Support;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
-
 
 
 class ProductController extends Controller
@@ -27,10 +23,10 @@ class ProductController extends Controller
     }
 
 
-    public function store(ProductRequest $request)
+    public function store(Request $request)
     {
         $image = $request->file('image');
-        $slug = str::slug($request->nombre);
+        $slug = str::slug($request->name);
         if (isset($image)) {
             $currentDate = Carbon::now()->toDateString();
             $imagename = $slug . '-' . $currentDate . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
@@ -42,7 +38,6 @@ class ProductController extends Controller
         } else {
             $imagename = "";
         }
-
 
 
         $product = new Product();
@@ -66,17 +61,15 @@ class ProductController extends Controller
     }
 
 
-    public function edit(Product $product)
+    public function edit(string $id)
     {
+        $product = Product::find($id);
         return view("products.edit", compact("product"));
     }
 
 
-    public function update(ProductRequest $request, string $id)
+    public function update(Request $request, Product $id)
     {
-
-        $product = Product::find($id);
-
         $image = $request->file('image');
         $slug = str::slug($request->name);
         if (isset($image)) {
@@ -88,31 +81,34 @@ class ProductController extends Controller
             }
             $image->move('uploads/products', $imagename);
         } else {
-            $imagename = $product->image;
+            $imagename = "";
         }
 
+
+
+        $product = new Product();
         $product->name = $request->name;
         $product->image = $imagename;
         $product->description = $request->description;
         $product->price = $request->price;
         $product->quantity = $request->quantity;
-        $product->registered_by = $request->user()->id;
+        $product->status = $request->status;
         $product->save();
 
-        return redirect()->route('products.index')->with('successMsg','El registro se actualizó exitosamente');
-    }
 
+        return redirect()->route("products.index")->with("success", "Product successfully updated.");
+    }
 
     public function destroy(Product $product)
     {
         $product->delete();
-        return redirect()->route('products.index')->with('eliminar', 'ok');
+        return redirect()->route("products.index")->with("success", "The product has been deleted.");
     }
 
-    public function cambioestadoarl(Product $product)
+    public function changeproducturl(Request $request)
     {
-        $arl = Product::find($product->product_id);
-        $arl->estatus = $product->estatus;
-        $arl->save();
+        $product = Product::find($request->product_id);
+        $product->status = $request->status;
+        $product->save();
     }
 }

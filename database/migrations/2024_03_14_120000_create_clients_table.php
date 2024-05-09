@@ -19,7 +19,8 @@ return new class extends Migration {
             $table->string('city')->nullable();
             $table->string('phone')->nullable();
             $table->string('email');
-            
+            $table->string('registered_by')->nullable();
+            $table->string('status')->nullable();
         });
     }
 

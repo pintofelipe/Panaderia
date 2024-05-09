@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProductRequest extends FormRequest
+class ProductRequests extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -19,28 +19,15 @@ class ProductRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    
-     public function rules(): array
+    public function rules(): array
     {
-        return [
-
-            
-            'name' => 'required|string|max:255',
-            'description' => 'nullable',
-            'stock' => 'required|numeric',
-            'price' => 'required|min:0',
-            'image' => 'nullable|mimes:jpg,jpeg,png|max:3000'
-
-        ];
-    }
-    public function attributes()
-    {
-        return [
-			'product_id' => 'producto',
-			
-			'image' => 'fotografía'
-			
-			
-        ];
+        if (request()->isMethod("post")) {
+            return [
+                "name" => "required",
+                "image" => "nullable",
+                "description" => "required",
+            ];
+        } elseif (request()->isMethod("put")) {
+        }
     }
 }

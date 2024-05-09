@@ -18,6 +18,8 @@ class Client extends Model
         'city',
         'phone',
         'email',
+        'status',
+        'registered_by',
     ];
 
     protected $guarded = ['id'];
