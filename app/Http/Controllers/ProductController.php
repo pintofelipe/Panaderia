@@ -88,6 +88,7 @@ class ProductController extends Controller
             $imagename = $product->image;
         }
 
+        
         $product->name = $request->name;
         $product->image = $imagename;
         $product->description = $request->description;
