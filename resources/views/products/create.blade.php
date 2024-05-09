@@ -28,7 +28,7 @@
                                                         style="color:red;">(*)</strong></label>
                                                 <input type="text" class="form-control" name="name"
                                                     placeholder="Ingrese el nombre del producto" autocomplete="off"
-                                                    value="{{ old('nombre') }}">
+                                                    value="{{ old('name') }}">
                                             </div>
                                         </div>
                                     </div>
@@ -39,7 +39,7 @@
                                                 <label class="control-label">Descripcion <strong
                                                         style="color:red;">(*)</strong></label>
                                                 <textarea class="form-control" name="description" placeholder="Ingrese la descripcion del producto" id=""
-                                                    cols="120" rows="4"></textarea>
+                                                    cols="120" rows="4">{{ old('description') }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -51,7 +51,7 @@
                                                         style="color:red;">(*)</strong></label>
                                                 <input type="text" class="form-control" name="quantity"
                                                     placeholder="Ingrese la cantidad del producto" autocomplete="off"
-                                                    value="{{ old('nombre') }}">
+                                                    value="{{ old('quantity') }}">
                                             </div>
                                         </div>
                                     </div>
@@ -63,7 +63,7 @@
                                                         style="color:red;">(*)</strong></label>
                                                 <input type="text" class="form-control" name="price"
                                                     placeholder="Ingrese el precio del producto" autocomplete="off"
-                                                    value="{{ old('nombre') }}">
+                                                    value="{{ old('price') }}">
                                             </div>
                                         </div>
                                     </div>
@@ -86,11 +86,11 @@
                                     <div class="row">
                                         <div class="col-lg-2 col-xs-4">
                                             <button type="submit"
-                                                class="btn btn-primary btn-block btn-flat">Register</button>
+                                                class="btn btn-primary btn-block btn-flat">Registrar</button>
                                         </div>
                                         <div class="col-lg-2 col-xs-4">
                                             <a href="{{ route('products.index') }}"
-                                                class="btn btn-danger btn-block btn-flat">Back</a>
+                                                class="btn btn-danger btn-block btn-flat">Atras</a>
                                         </div>
                                     </div>
                                 </div>

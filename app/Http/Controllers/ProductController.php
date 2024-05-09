@@ -25,30 +25,35 @@ class ProductController extends Controller
 
 
     public function store(ProductRequest $request)
-{
-    // Si la solicitud llega a este punto, significa que los datos han pasado la validación
+    {
+        $image = $request->file('image');
+        $slug = str::slug($request->name);
+        if (isset($image)) {
+            $currentDate = Carbon::now()->toDateString();
+            $imagename = $slug . '-' . $currentDate . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
 
-    $image = $request->file('image');
-    $slug = Str::slug($request->name);
-    if (isset($image)) {
-        // Procesamiento de la imagen
-    } else {
-        $imagename = "";
+            if (!file_exists('uploads/products')) {
+                mkdir('uploads/products', 0777, true);
+            }
+            $image->move('uploads/products', $imagename);
+        } else {
+            $imagename = "";
+        }
+
+
+        $product = new Product();
+        $product->name = $request->name;
+        $product->image = $imagename;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->quantity = $request->quantity;
+        $product->status = 1;
+        $product->registered_by = $request->user()->id;
+        $product->save();
+
+
+        return redirect()->route("products.index")->with("success", "Product successfully added.");
     }
-
-    // Crear un nuevo producto con los datos validados
-    $product = new Product();
-    $product->name = $request->name;
-    $product->image = $imagename;
-    $product->description = $request->description;
-    $product->price = $request->price;
-    $product->quantity = $request->stock; // Ajusta el nombre del campo según sea necesario
-    $product->status = 1;
-    $product->registered_by = $request->user()->id;
-    $product->save();
-
-    return redirect()->route("products.index")->with("success", "Product successfully added.");
-}
 
 
     public function show(string $id)
