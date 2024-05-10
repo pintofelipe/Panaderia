@@ -18,7 +18,8 @@
                             <div class="card-header bg-secondary">
                                 <h3>@yield('title')</h3>
                             </div>
-                            <form method="POST" action="{{ route('clients.store') }}" enctype="multipart/form-data">
+                            <form method="POST" action="{{ route('clients.update', $client->id) }}"
+                                enctype="multipart/form-data">
                                 @csrf
                                 <div class="card-body">
                                     <div class="row">
@@ -28,7 +29,7 @@
                                                         style="color:red;">(*)</strong></label>
                                                 <input type="text" class="form-control" name="name"
                                                     placeholder="Enter the client name" autocomplete="off"
-                                                    value="{{ old('nombre') }}">
+                                                    value="{{ $client->name }}">
                                             </div>
                                         </div>
                                     </div>
@@ -48,8 +49,8 @@
                                             <div class="form-group label-floating">
                                                 <label class="control-label">Address<strong
                                                         style="color:red;">(*)</strong></label>
-                                                <textarea class="form-control" name="address" placeholder="Enter the client address" id=""
-                                                    cols="120" rows="4"></textarea>
+                                                <textarea class="form-control" name="address" placeholder="Enter the client address" id="" cols="120"
+                                                    rows="4">{{ $client->address }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -61,7 +62,7 @@
                                                         style="color:red;">(*)</strong></label>
                                                 <input type="text" class="form-control" name="city"
                                                     placeholder="Enter the client city" autocomplete="off"
-                                                    value="{{ old('nombre') }}">
+                                                    value="{{ $client->city }}">
                                             </div>
                                         </div>
                                     </div>
@@ -73,7 +74,7 @@
                                                         style="color:red;">(*)</strong></label>
                                                 <input type="text" class="form-control" name="phone"
                                                     placeholder="Enter the client phone" autocomplete="off"
-                                                    value="{{ old('nombre') }}">
+                                                    value="{{ $client->phone }}">
                                             </div>
                                         </div>
                                     </div>
@@ -85,7 +86,7 @@
                                                         style="color:red;">(*)</strong></label>
                                                 <input type="text" class="form-control" name="email"
                                                     placeholder="Enter the client email" autocomplete="off"
-                                                    value="{{ old('nombre') }}">
+                                                    value="{{ $client->email }}">
                                             </div>
                                         </div>
                                     </div>

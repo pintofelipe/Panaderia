@@ -48,17 +48,23 @@ class OrderController extends Controller
             $order->status = 1;
             $order->registered_by = $request->user()->id;
             $order->route = $request->route;
-            $order = $order->save();
+       
 
-            $idorder = $order->id;
+            
 
-            $count=0;
-            while($count < count($idorder)) {
-                
 
-                $detailOrder ->save();
-                $count++;
-            }
+           $order = new Order();
+            $idOrder = $order->id;
+
+        $i = 0;
+        while ($i < count($request->item)) {
+            $orderDetail = new OrderDetail();
+            $order->order_id = $idOrder;
+            $orderDetail->save();
+        }
+
+        $order->client_id = $request->client_id;
+        $order->save();
 
 
 

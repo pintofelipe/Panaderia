@@ -24,7 +24,7 @@ class Product extends Model
 
     protected $guarded = [
         'id',
-        'estatus',
+        'status',
         'registered_by'
 
     ];

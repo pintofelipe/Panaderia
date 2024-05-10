@@ -59,7 +59,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="pages/charts/inline.html" class="nav-link">
+                        <a href="{{ route('orders.index') }}" class="nav-link">
                                 <i class="fa-solid fa-scroll nav-icon"></i>
                                 <p>Venta/Factura</p>
                             </a>
