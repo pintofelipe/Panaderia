@@ -28,7 +28,7 @@
                                                         style="color:red;">(*)</strong></label>
                                                 <input type="text" class="form-control" name="name"
                                                     placeholder="Enter the client name" autocomplete="off"
-                                                    value="{{ old('nombre') }}">
+                                                    value="{{ old('name') }}">
                                             </div>
                                         </div>
                                     </div>
@@ -73,7 +73,7 @@
                                                         style="color:red;">(*)</strong></label>
                                                 <input type="text" class="form-control" name="phone"
                                                     placeholder="Enter the client phone" autocomplete="off"
-                                                    value="{{ old('nombre') }}">
+                                                    value="{{ old('phone') }}">
                                             </div>
                                         </div>
                                     </div>
@@ -85,7 +85,7 @@
                                                         style="color:red;">(*)</strong></label>
                                                 <input type="text" class="form-control" name="email"
                                                     placeholder="Enter the client email" autocomplete="off"
-                                                    value="{{ old('nombre') }}">
+                                                    value="{{ old('email') }}">
                                             </div>
                                         </div>
                                     </div>

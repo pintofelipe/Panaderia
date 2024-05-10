@@ -18,7 +18,11 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $products = Product::all();
+       
+
+        $orders = Order::select("clients.name","clients.document","orders.date_order","orders.total","orders.status")->join("clients","clients.id","=","Order.client_id")->get();
+
+
         return view("orders.index", compact("orders"));
     }
 
@@ -49,9 +53,6 @@ class OrderController extends Controller
             $order->registered_by = $request->user()->id;
             $order->route = $request->route;
        
-
-            
-
 
            $order = new Order();
             $idOrder = $order->id;
