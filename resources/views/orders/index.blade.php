@@ -22,7 +22,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title text-lg">@yield('tittle')</h3>
+                                <h3 class="card-title text-lg">@yield('title')</h3>
 
                                 <a href="{{ route('orders.create') }}" class="btn btn-primary float-right"><i
                                         class="fas fa-plus nav-icon"></i></a>
@@ -34,10 +34,11 @@
                                     <thead class="text-primary">
                                         <tr>
                                             <th>ID</th>
-                                            <th>Name Client</th>
-                                            <th>Document</th>
+                                            <th>Client Name</th>
+                                            <th>Client Document</th>
                                             <th>Date</th>
                                             <th>Total</th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -45,8 +46,8 @@
                                         @foreach ($orders as $order)
                                             <tr>
                                                 <td>{{ $order->id }}</td>
-                                                <td>{{ $order->client->name }}</td>
-                                                <td>{{ $order->client->document }}</td>
+                                                <td>{{ $order->name }}</td>
+                                                <td>{{ $order->document }}</td>
                                                 <td>{{ $order->date_order }}</td>
                                                 <td>{{ $order->total_amount }}</td>
 
@@ -59,12 +60,6 @@
                                                 </td>
 
                                                 <td>
-
-
-                                                    <a class="btn btn-info btn-sm"
-                                                        href="{{ route('orders.edit', $order->id) }}" title="Edit"><i
-                                                            class="fas fa-pencil-alt"></i></a>
-
                                                     <form class="d-inline delete-form"
                                                         action="{{ route('orders.destroy', $order) }}" method="POST">
                                                         @csrf

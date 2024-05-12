@@ -2,98 +2,88 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\OrderRequest;
-use App\Models\User;
 use App\Models\Client;
 use App\Models\Order;
 use App\Models\OrderDetail;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
-
-
-
 use App\Models\Product;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-       
-
-        $orders = Order::select("clients.name","clients.document","orders.date_order","orders.total","orders.status")->join("clients","clients.id","=","Order.client_id")->get();
-
-
-        return view("orders.index", compact("orders"));
+        $orders = Order::select('clients.name', 'clients.document', 'orders.order_detail_id', 'orders.id', 'orders.total', 'orders.date_order')
+            ->join('clients', 'orders.client_id', '=', 'clients.id')
+            ->get();
+        return view('orders.index', compact('orders'));
     }
 
-   
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
-        $clients = Client::where("status", '=', '1' )->orderBy('name')->get();
-        $products = Product::where("status", '=', '1' )->orderBy('name')->get();
-    
-        $fecha = Carbon ::now();
-        $fecha = $fecha->format('Y-m-d');
-
-        return view('orders.create', compact('clients','products','fecha'));
+        $clients = Client::all();
+        return view('orders.create', compact('clients'));
     }
 
-    
-    public function store(OrderRequest $request)
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
     {
-        DB::beginTransaction();
+        $order = new Order();
+        $order->date_order = Carbon::now()->toDateTimeString();
+        $order->total = 0;
+        $order->route = "Por hacer";
+        $order->status = $request->status;
+        $order->registered_by = $request->registered_by;
+        $order->client_id = Client::find($request->client)->id;
 
-        try {
+        $orderDetail = new OrderDetail();
+        $orderDetail->quantity = 0;
+        $orderDetail->subtotal = 0;
+        $orderDetail->product_id = Product::find(2)->id; // TODO: Remove hardcode.
+        $orderDetail->save();
 
-            $order = new Order();
-            $order->client_id = $request->client_id;
-            $order->dateOrder = $request->client_dateOrder;
-            $order->total = $request->total;
-            $order->status = 1;
-            $order->registered_by = $request->user()->id;
-            $order->route = $request->route;
-       
+        $order->order_detail_id = $orderDetail->id;
 
-           $order = new Order();
-            $idOrder = $order->id;
-
-        $i = 0;
-        while ($i < count($request->item)) {
-            $orderDetail = new OrderDetail();
-            $order->order_id = $idOrder;
-            $orderDetail->save();
-        }
-
-        $order->client_id = $request->client_id;
         $order->save();
 
-
-
-        } catch (\Exception $e) {
-            return redirect()->back()->with('SuccessMsg','Error al registrar la informacion');
-        }
-        
+        return redirect()->route("orders.index")->with("success", "The orders has been created.");
     }
 
-    
+    /**
+     * Display the specified resource.
+     */
     public function show(string $id)
     {
         //
     }
 
-    
+    /**
+     * Show the form for editing the specified resource.
+     */
     public function edit(string $id)
     {
         //
     }
 
-   
-    public function update(OrderRequest $request, string $id)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
     {
         //
     }
 
-    
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy(string $id)
     {
         //
