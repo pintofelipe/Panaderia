@@ -24,7 +24,7 @@ class ProductController extends Controller
     }
 
 
-    public function store(ProductRequest $request)
+    public function store(Request $request)
     {
         $image = $request->file('image');
         $slug = str::slug($request->name);
@@ -89,7 +89,7 @@ class ProductController extends Controller
             $imagename = $product->image;
         }
 
-        
+
         $product->name = $request->name;
         $product->image = $imagename;
         $product->description = $request->description;
@@ -98,7 +98,7 @@ class ProductController extends Controller
         $product->registered_by = $request->user()->id;
         $product->save();
 
-        return redirect()->route('products.index')->with('successMsg','El registro se actualizó exitosamente');
+        return redirect()->route('products.index')->with('successMsg', 'El registro se actualizó exitosamente');
     }
 
     public function destroy(Product $product)

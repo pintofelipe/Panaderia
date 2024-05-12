@@ -49,8 +49,7 @@
                                                 <td>{{ $order->name }}</td>
                                                 <td>{{ $order->document }}</td>
                                                 <td>{{ $order->date_order }}</td>
-                                                <td>{{ $order->total_amount }}</td>
-
+                                                <td>{{ $order->total }}</td>
 
                                                 <td>
                                                     <input data-id="{{ $order->id }}" class="toggle-class"

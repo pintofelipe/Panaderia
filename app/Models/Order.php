@@ -18,7 +18,6 @@ class Order extends Model
         'status',
         "registered_by",
         'client_id',
-        'order_detail_id',
     ];
 
     protected $guarded = ['id'];
