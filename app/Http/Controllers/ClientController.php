@@ -50,6 +50,7 @@ class ClientController extends Controller
 
         $product = new Client();
         $product->name = $request->name;
+        $product->document = $request->document;
         $product->photo = $photoName;
         $product->address = $request->address;
         $product->city = $request->city;
@@ -84,7 +85,35 @@ class ClientController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $client = Client::find($id);
+
+        $image = $request->file('photo');
+        $slug = str::slug($request->name);
+
+        if (isset($image)) {
+            $currentDate = Carbon::now()->toDateString();
+            $photoName = $slug . '-' . $currentDate . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
+
+            if (!file_exists('uploads/clients')) {
+                mkdir('uploads/clients', 0777, true);
+            }
+            $image->move('uploads/clients', $photoName);
+        } else {
+            $photoName = "";
+        }
+
+        $client->name = $request->name;
+        $client->document = $request->document;
+        $client->photo = $photoName;
+        $client->address = $request->address;
+        $client->city = $request->city;
+        $client->phone = $request->phone;
+        $client->email = $request->email;
+        $client->status = 1;
+        $client->registered_by = $request->user()->id;
+        $client->save();
+
+        return redirect()->route("clients.index")->with("success", "Client successfully edited.");
     }
 
     /**

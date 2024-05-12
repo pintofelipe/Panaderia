@@ -34,6 +34,18 @@
                                     </div>
 
                                     <div class="row">
+                                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Document<strong
+                                                        style="color:red;">(*)</strong></label>
+                                                <input type="text" class="form-control" name="document"
+                                                    placeholder="Enter the client document" autocomplete="off"
+                                                    value="{{ old('document') }}">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
                                         <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
                                             <div class="form-group label-floating">
                                                 <label class="control-label">Photo</label>
@@ -48,8 +60,8 @@
                                             <div class="form-group label-floating">
                                                 <label class="control-label">Address<strong
                                                         style="color:red;">(*)</strong></label>
-                                                <textarea class="form-control" name="address" placeholder="Enter the client address" id=""
-                                                    cols="120" rows="4"></textarea>
+                                                <textarea class="form-control" name="address" placeholder="Enter the client address" id="" cols="120"
+                                                    rows="4"></textarea>
                                             </div>
                                         </div>
                                     </div>

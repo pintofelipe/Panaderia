@@ -35,6 +35,7 @@
                                         <tr>
                                             <th width="10px">ID</th>
                                             <th>Name</th>
+                                            <th>Document</th>
                                             <th>Photo</th>
                                             <th>Address</th>
                                             <th>City</th>
@@ -49,6 +50,7 @@
                                             <tr>
                                                 <td>{{ $client->id }}</td>
                                                 <td>{{ $client->name }}</td>
+                                                <td>{{ $client->document }}</td>
                                                 <td>
                                                     @if ($client->photo != null)
                                                         <center>

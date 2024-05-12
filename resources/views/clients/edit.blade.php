@@ -18,9 +18,11 @@
                             <div class="card-header bg-secondary">
                                 <h3>@yield('title')</h3>
                             </div>
-                            <form method="POST" action="{{ route('clients.update', $client->id) }}"
+                            <form method="POST" action="{{ route('clients.update', $client) }}"
                                 enctype="multipart/form-data">
+
                                 @csrf
+                                @method('PUT')
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
@@ -30,6 +32,18 @@
                                                 <input type="text" class="form-control" name="name"
                                                     placeholder="Enter the client name" autocomplete="off"
                                                     value="{{ $client->name }}">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Document<strong
+                                                        style="color:red;">(*)</strong></label>
+                                                <input type="text" class="form-control" name="document"
+                                                    placeholder="Enter the client name" autocomplete="off"
+                                                    value="{{ $client->document }}">
                                             </div>
                                         </div>
                                     </div>
@@ -90,10 +104,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    <input type="hidden" class="form-control" name="status" value="1">
-                                    <input type="hidden" class="form-control" name="registered_by"
-                                        value="{{ Auth::user()->id }}">
                                 </div>
                                 <div class="card-footer">
                                     <div class="row">
