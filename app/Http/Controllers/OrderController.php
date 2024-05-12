@@ -19,11 +19,9 @@ class OrderController extends Controller
         $orders = Order::select('clients.name', 'clients.document', 'orders.id', 'orders.total', 'orders.date_order')
             ->join('clients', 'orders.client_id', '=', 'clients.id')
             ->get();
-        $order_details = Order::select('order_details')
-            ->join('order_details', 'order_details.order_id', '=', 'orders.id')
-            ->get();
 
-        return view('orders.index', compact('orders', 'order_details'));
+
+        return view('orders.index', compact('orders'));
     }
 
     /**
@@ -80,7 +78,12 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $order = Order::find($id);
+        $details = OrderDetail::select('order_details.product_id', 'order_details.quantity', 'order_details.subtotal')
+            ->where('order_details.order_id', '=', $id)
+            ->get();
+
+        return view("orders.show", compact("order", "details"));
     }
 
     /**
