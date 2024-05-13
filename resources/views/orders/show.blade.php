@@ -19,10 +19,10 @@
 
                         @foreach ($details as $detail)
                             <tr>
-                                <th>{{ $detail->product_id }}</th>
-                                <th> Conseguir precio </th>
-                                <th> {{ $detail->quantity }} </th>
-                                <th>${{ $detail->subtotal }}</th>
+                                <td>{{ $detail->product->name }}</td>
+                                <td>${{ $detail->product->price }}</td>
+                                <td>{{ $detail->quantity }}</td>
+                                <td>${{ $detail->subtotal }}</td>
                             </tr>
                         @endforeach
 
