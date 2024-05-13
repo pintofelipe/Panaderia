@@ -68,6 +68,10 @@
                                                             <i class="fas fa-trash-alt"></i>
                                                         </button>
                                                     </form>
+                                                    <a href="{{ route('orders.show', $order) }}"
+                                                        class="btn btn-primary btn-sm" title="View bill">
+                                                        <i class="fa-solid fa-eye"></i>
+                                                    </a>
                                                 </td>
                                         @endforeach
                                     </tbody>
