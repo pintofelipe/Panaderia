@@ -39,25 +39,31 @@
                                         </div>
                                     </div>
 
-                                    <input type="hidden" class="form-control" name="status" value="1">
-                                    <input type="hidden" class="form-control" name="registered_by"
-                                        value="{{ Auth::user()->id }}">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <input type="hidden" class="form-control" name="status" value="1">
+                                            <input type="hidden" class="form-control" name="registered_by"
+                                                value="{{ Auth::user()->id }}">
 
-                                    <span id="add-field-button" class="btn btn-primary btn-block btn-flat">
-                                        Añadir campo
-                                    </span>
+                                            <span id="add-field-button" class="form-control btn btn-primary">
+                                                Add product
+                                            </span>
+                                        </div>
+                                    </div>
 
-                                    <div class="row" data-details-field=true>
-                                        <select class="form-control" name="product_id[]">
-                                            <option value="-1">Please select a product</option>
-                                            @foreach ($products as $product)
-                                                <option value="{{ $product->id }}">{{ $product->name }}
-                                                    (${{ $product->price }})
-                                                </option>
-                                            @endforeach
-                                        </select>
+                                    <div class="row mt-2" data-details-field=true>
+                                        <div class="col-12">
+                                            <select class="form-control" name="product_id[]">
+                                                <option value="-1">Please select a product</option>
+                                                @foreach ($products as $product)
+                                                    <option value="{{ $product->id }}">{{ $product->name }}
+                                                        (${{ $product->price }})
+                                                    </option>
+                                                @endforeach
+                                            </select>
 
-                                        <input type="number" class="form-control" name="quantity[]" value="1">
+                                            <input type="number" class="form-control" name="quantity[]" value="1">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="card-footer">

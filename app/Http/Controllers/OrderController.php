@@ -16,7 +16,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::select('clients.name', 'clients.document', 'orders.id', 'orders.total', 'orders.date_order')
+        $orders = Order::select('clients.name', 'clients.document', 'orders.id', 'orders.total', 'orders.date_order', 'orders.status')
             ->join('clients', 'orders.client_id', '=', 'clients.id')
             ->get();
 
@@ -84,7 +84,7 @@ class OrderController extends Controller
             ->where('order_details.order_id', '=', $id)
             ->get();
 
-            return view("orders.show", compact("order", "client", "details"));
+        return view("orders.show", compact("order", "client", "details"));
     }
 
     /**
@@ -110,5 +110,12 @@ class OrderController extends Controller
     {
         $order->delete();
         return redirect()->route("orders.index")->with("success", "The order has been deleted.");
+    }
+
+    public function changeorderurl(Request $request)
+    {
+        $order = Order::find($request->order_id);
+        $order->status = $request->status;
+        $order->save();
     }
 }
