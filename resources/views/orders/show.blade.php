@@ -3,10 +3,23 @@
 @section('title', 'Bill')
 
 @section('content')
+
     <div class="content-wrapper">
         <section class="content">
             <div class="container-fluid">
-                <table class="table">
+                <div class="row p-3">
+                    <div class="col-6">
+                        Date: {{ $order->date_order }}
+                        <br>
+                        Total: ${{ $order->total }}
+                    </div>
+                    <div class="col-6">
+                        Client: {{ $client->name }}
+                        <br>
+                        Document: {{ $client->document }}
+                    </div>
+                </div>
+                <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th scope="col">Product</th>
@@ -15,14 +28,14 @@
                             <th scope="col">Subtotal</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="table-group-divider">
 
                         @foreach ($details as $detail)
                             <tr>
-                                <td>{{ $detail->product->name }}</td>
-                                <td>${{ $detail->product->price }}</td>
-                                <td>{{ $detail->quantity }}</td>
-                                <td>${{ $detail->subtotal }}</td>
+                                <th>{{ $detail->product->name }}</th>
+                                <th> ${{ $detail->product->price }} </th>
+                                <th> {{ $detail->quantity }} </th>
+                                <th>${{ $detail->subtotal }}</th>
                             </tr>
                         @endforeach
 
