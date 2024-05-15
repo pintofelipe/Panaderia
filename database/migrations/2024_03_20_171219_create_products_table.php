@@ -25,7 +25,8 @@ return new class extends Migration {
             $table->unsignedBigInteger('provider_id')->nullable();
             $table->foreign('provider_id')
                 ->references('id')
-                ->on('providers');
+                ->on('providers')
+                ->cascadeOnDelete();
     
         });
     }
