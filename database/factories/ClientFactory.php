@@ -17,12 +17,14 @@ class ClientFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'=>$this->faker->name,
-            'document'=>$this->faker->unique()->numberBetween(10000,99000),
-            'email'=>$this->faker->email,
-            'phone'=>$this->faker->phoneNumber,
-            'address'=>$this->faker->address,
-            'city'=> $this->faker->city,
+            'name' => $this->faker->name,
+            'document' => $this->faker->numberBetween(1234567890, 2134567890),
+            'address' => $this->faker->address,
+            'city' => $this->faker->city,
+            'phone' => $this->faker->phoneNumber,
+            'email' => $this->faker->email,
+            'registered_by' => \App\Models\User::factory(),
+            'status' => "1",
         ];
     }
 }

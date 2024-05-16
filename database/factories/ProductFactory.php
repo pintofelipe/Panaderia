@@ -22,6 +22,8 @@ class ProductFactory extends Factory
             'description' => $this->faker->sentence, 
             'image' => $this->faker->imageUrl(), // Genera una URL aleatoria para una imagen
             'provider_id'=>\App\Models\Provider::factory(), 
+            'registered_by' =>\App\Models\User::factory(), 
+            'status'=> "1",
         ];
     }
 }
