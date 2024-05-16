@@ -18,6 +18,7 @@ class ClientFactory extends Factory
     {
         return [
             'name'=>$this->faker->name,
+            'document'=>$this->faker->unique()->numberBetween(10000,99000),
             'email'=>$this->faker->email,
             'phone'=>$this->faker->phoneNumber,
             'address'=>$this->faker->address,
