@@ -41,7 +41,7 @@ class OrderController extends Controller
     {
         $order = Order::create([
             'date_order' => Carbon::now()->toDateTimeString(),
-            'total' => 0,
+            'total' => $request->total,
             'route' => "Por hacer",
             'client_id' => Client::find($request->client)->id,
         ]);
