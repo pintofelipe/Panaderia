@@ -28,7 +28,7 @@ class ProductRequest extends FormRequest
 				'price' => 'nullable',
 				'date caducidade' => 'nullable',
 				'quantity' => 'required',
-				'image' => 'nullable|mimes:jpg,jpeg,png|max:3000',
+				'image' => 'nullable|mimes:jpg,jpeg,png|max:6000',
                 'status' => 'nullable',
                 'registerby' => 'nullable',		
             ];
@@ -39,7 +39,7 @@ class ProductRequest extends FormRequest
 				'price' => 'nullable',
 				'date caducidade' => 'nullable',
 				'quantity' => 'required',
-				'image' => 'nullable|mimes:jpg,jpeg,png|max:3000',
+				'image' => 'nullable|mimes:jpg,jpeg,png|max:6000',
                 'status' => 'nullable',
                 'registerby' => 'nullable',
             ];
