@@ -14,19 +14,16 @@ return new class extends Migration {
             $table->id();
 
             $table->dateTime('date_order');
-            $table->decimal('total');
-            $table->string('route')
-            ->cascadeOnDelete();
+            $table->string('route');
+            $table->float('total');
 
             $table->string('registered_by')->nullable();
-            $table->string('status')->nullable()
-            ->cascadeOnDelete();
+            $table->string('status')->nullable();
 
             $table->unsignedBigInteger('client_id');
             $table->foreign('client_id')
                 ->references('id')
-                ->on('clients')
-                ->cascadeOnDelete();
+                ->on('clients');
         });
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OrderRequest;
 use App\Models\Client;
 use App\Models\Order;
 use App\Models\OrderDetail;
@@ -37,7 +38,7 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(OrderRequest $request)
     {
         $order = Order::create([
             'date_order' => Carbon::now()->toDateTimeString(),
@@ -49,25 +50,6 @@ class OrderController extends Controller
         $order->status = 1;
         $order->registered_by = $request->registered_by;
 
-        $total = 0;
-
-        $rawProductId = $request->product_id;
-        $rawQuantity = $request->quantity;
-        for ($i = 0; $i < count($rawProductId); $i++) {
-            $product = Product::find($rawProductId[$i]);
-            $quantity = $rawQuantity[$i];
-            $subtotal = $product->price * $quantity;
-
-            $order->order_details()->create([
-                'quantity' => $quantity,
-                'subtotal' => $subtotal,
-                'product_id' => $product->id,
-            ]);
-
-            $total += $subtotal;
-        }
-
-        $order->total = $total;
         $order->save();
 
         return redirect()->route("orders.index")->with("success", "The orders has been created.");

@@ -37,7 +37,7 @@ class ProductRequest extends FormRequest
                 'description' => 'nullable',
                 'price' => 'nullable',
                 'quantity' => 'required',
-                'image' => 'nullable|mimes:jpg,jpeg,png|max:6000',
+                'image' => 'nullable|mimes:jpg,jpeg,png|max:9000',
                 'status' => 'nullable',
                 'registered_by' => 'nullable',
             ];
