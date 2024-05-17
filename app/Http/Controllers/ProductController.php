@@ -122,7 +122,7 @@ class ProductController extends Controller
        return redirect()->route('products.index')->with('eliminar','ok');
     }
 
-    public function changestatusproduct(Request $request)
+    public function changeproducturl(Request $request)
 	{
 		$product = Product::find($request->product_id);
 		$product->status=$request->status;
