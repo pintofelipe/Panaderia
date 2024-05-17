@@ -2,19 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ClientRequest;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
-use App\Http\Requests\ClientRequest;
+use Illuminate\Http\Request;
 
 use App\Models\Client;
 
 class ClientController extends Controller
-
-
-
-
-
 {
     /**
      * Display a listing of the resource.
@@ -36,10 +32,10 @@ class ClientController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ClientRequest $ClientRequest)
+    public function store(ClientRequest $request)
     {
-        $image = $ClientRequest->file('photo');
-        $slug = str::slug($ClientRequest->name);
+        $image = $request->file('photo');
+        $slug = str::slug($request->name);
 
         if (isset($image)) {
             $currentDate = Carbon::now()->toDateString();
@@ -54,15 +50,15 @@ class ClientController extends Controller
         }
 
         $product = new Client();
-        $product->name = $ClientRequest->name;
-        $product->document = $ClientRequest->document;
+        $product->name = $request->name;
+        $product->document = $request->document;
         $product->photo = $photoName;
-        $product->address = $ClientRequest->address;
-        $product->city = $ClientRequest->city;
-        $product->phone = $ClientRequest->phone;
-        $product->email = $ClientRequest->email;
+        $product->address = $request->address;
+        $product->city = $request->city;
+        $product->phone = $request->phone;
+        $product->email = $request->email;
         $product->status = 1;
-        $product->registered_by = $ClientRequest->user()->id;
+        $product->registered_by = $request->user()->id;
         $product->save();
 
         return redirect()->route("clients.index")->with("success", "Client successfully added.");
@@ -88,12 +84,12 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ClientRequest $ClientRequest, string $id)
+    public function update(ClientRequest $request, string $id)
     {
         $client = Client::find($id);
 
-        $image = $ClientRequest->file('photo');
-        $slug = str::slug($ClientRequest->name);
+        $image = $request->file('photo');
+        $slug = str::slug($request->name);
 
         if (isset($image)) {
             $currentDate = Carbon::now()->toDateString();
@@ -107,15 +103,15 @@ class ClientController extends Controller
             $photoName = "";
         }
 
-        $client->name = $ClientRequest->name;
-        $client->document = $ClientRequest->document;
+        $client->name = $request->name;
+        $client->document = $request->document;
         $client->photo = $photoName;
-        $client->address = $ClientRequest->address;
-        $client->city = $ClientRequest->city;
-        $client->phone = $ClientRequest->phone;
-        $client->email = $ClientRequest->email;
+        $client->address = $request->address;
+        $client->city = $request->city;
+        $client->phone = $request->phone;
+        $client->email = $request->email;
         $client->status = 1;
-        $client->registered_by = $ClientRequest->user()->id;
+        $client->registered_by = $request->user()->id;
         $client->save();
 
         return redirect()->route("clients.index")->with("success", "Client successfully edited.");
@@ -127,13 +123,13 @@ class ClientController extends Controller
     public function destroy(Client $client)
     {
         $client->delete();
-        return redirect()->route("clients.index")->with("success", "The product has been deleted.");
+        return redirect()->route("clients.index")->with("success", "The client has been deleted.");
     }
 
-    public function changeclienturl(ClientRequest $ClientRequest)
+    public function changeclienturl(Request $request)
     {
-        $product = Client::find($ClientRequest->client_id);
-        $product->status = $ClientRequest->status;
+        $product = Client::find($request->client_id);
+        $product->status = $request->status;
         $product->save();
     }
 }
