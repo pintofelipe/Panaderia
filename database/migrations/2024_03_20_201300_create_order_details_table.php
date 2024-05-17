@@ -21,7 +21,8 @@ return new class extends Migration {
             $table->foreign('product_id')
                 ->references('id')
                 ->on('products')
-                ->cascadeOnDelete();
+                ->cascadeOnDelete();;
+                
 
             $table->unsignedBigInteger('order_id');
             $table->foreign('order_id')

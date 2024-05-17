@@ -15,19 +15,18 @@ return new class extends Migration {
 
             $table->string('name');
             $table->string('image')->nullable();
-            $table->string('description')->nullable();
+            $table->string('description');
+
             $table->string('registered_by')->nullable();
             $table->string('status')->nullable();
-            $table->decimal('price', 8, 2);
-            $table->integer('quantity')->default(0)->nullable();
-        
+
+            $table->decimal('price', 12, 2);
+            $table->integer('quantity')->default(0);
 
             $table->unsignedBigInteger('provider_id')->nullable();
             $table->foreign('provider_id')
                 ->references('id')
-                ->on('providers')
-                ->cascadeOnDelete();
-    
+                ->on('providers');
         });
     }
 

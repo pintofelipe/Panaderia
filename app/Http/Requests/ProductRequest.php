@@ -21,30 +21,28 @@ class ProductRequest extends FormRequest
      */
     public function rules(): array
     {
-        if (request()->isMethod('POST')){
+        if (request()->isMethod('POST')) {
             return [
                 'name' => 'required|regex:/^[\pL\s\-]+$/u',
-				'description' => 'nullable',
-				'price' => 'nullable',
-				'date caducidade' => 'nullable',
-				'quantity' => 'required',
-				'image' => 'nullable|mimes:jpg,jpeg,png|max:6000',
+                'description' => 'nullable',
+                'price' => 'nullable',
+                'quantity' => 'required',
+                'image' => 'nullable|mimes:jpg,jpeg,png|max:6000',
                 'status' => 'nullable',
-                'registerby' => 'nullable',		
+                'registered_by' => 'nullable',
             ];
-        }elseif (request()->isMethod('put')){
-            return[
+        } elseif (request()->isMethod('put')) {
+            return [
                 'name' => 'required|regex:/^[\pL\s\-]+$/u',
-				'description' => 'nullable',
-				'price' => 'nullable',
-				'date caducidade' => 'nullable',
-				'quantity' => 'required',
-				'image' => 'nullable|mimes:jpg,jpeg,png|max:6000',
+                'description' => 'nullable',
+                'price' => 'nullable',
+                'quantity' => 'required',
+                'image' => 'nullable|mimes:jpg,jpeg,png|max:6000',
                 'status' => 'nullable',
-                'registerby' => 'nullable',
+                'registered_by' => 'nullable',
             ];
 
         }
-        
+
     }
 }

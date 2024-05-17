@@ -21,26 +21,24 @@ class ClientRequest extends FormRequest
      */
     public function rules(): array
     {
-        if (request()->isMethod('POST')){
+        if (request()->isMethod('POST')) {
             return [
                 'name' => 'required|regex:/^[\pL\s\-]+$/u',
-				'identification_document' => 'nullable',
-				'address' => 'nullable',
-				'phone_number' => 'nullable',
-				'email' => 'required',
-				'image' => 'nullable|mimes:jpg,jpeg,png|max:3000',	
+                'document' => 'nullable',
+                'address' => 'nullable',
+                'email' => 'required',
+                'image' => 'nullable|mimes:jpg,jpeg,png|max:6000',
             ];
-        }elseif (request()->isMethod('put')){
-            return[
+        } elseif (request()->isMethod('put')) {
+            return [
                 'name' => 'required|regex:/^[\pL\s\-]+$/u',
-				'identification_document' => 'nullable',
-				'address' => 'nullable',
-				'phone_number' => 'nullable',
-				'email' => 'required',
-				'image' => 'nullable|mimes:jpg,jpeg,png|max:3000',	
+                'document' => 'nullable',
+                'address' => 'nullable',
+                'email' => 'required',
+                'image' => 'nullable|mimes:jpg,jpeg,png|max:6000',
             ];
 
         }
-        
+
     }
 }

@@ -15,10 +15,12 @@ return new class extends Migration {
 
             $table->dateTime('date_order');
             $table->decimal('total');
-            $table->string('route');
+            $table->string('route')
+            ->cascadeOnDelete();
 
             $table->string('registered_by')->nullable();
-            $table->string('status')->nullable();
+            $table->string('status')->nullable()
+            ->cascadeOnDelete();
 
             $table->unsignedBigInteger('client_id');
             $table->foreign('client_id')
