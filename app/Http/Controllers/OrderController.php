@@ -60,14 +60,21 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        $order = Order::find($id);
-        $client = Client::where("id", $order->client_id)->first();
-        $details = OrderDetail::with('product')
+        // Obteniendo la información del pedido junto con el cliente
+        $order = Order::select('clients.name as client_name', 'clients.document as client_document', 'orders.id', 'orders.date_order', 'orders.total')
+            ->join('clients', 'clients.id', '=', 'orders.client_id')
+            ->where('orders.id', $id)
+            ->firstOrFail();
+    
+        // Obteniendo los detalles del pedido junto con la información del producto
+        $details = OrderDetail::select('products.name as product_name', 'products.price as product_price', 'order_details.quantity')
+            ->join('products', 'order_details.product_id', '=', 'products.id')
             ->where('order_details.order_id', '=', $id)
             ->get();
-
-        return view("orders.show", compact("order", "client", "details"));
+    
+        return view("orders.show", compact("order", "details"));
     }
+    
 
     /**
      * Show the form for editing the specified resource.
