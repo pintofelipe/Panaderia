@@ -10,6 +10,9 @@ use App\Models\Product;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\DB;
+use \Exception;
+
 class OrderController extends Controller
 {
     /**
@@ -17,10 +20,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::select('clients.name', 'clients.document', 'orders.id', 'orders.total', 'orders.date_order', 'orders.status')
-            ->join('clients', 'orders.client_id', '=', 'clients.id')
-            ->get();
-
+        $orders = Order::all();
 
         return view('orders.index', compact('orders'));
     }
@@ -40,19 +40,39 @@ class OrderController extends Controller
      */
     public function store(OrderRequest $request)
     {
-        $order = Order::create([
-            'date_order' => Carbon::now()->toDateTimeString(),
-            'total' => $request->total,
-            'route' => "Por hacer",
-            'client_id' => Client::find($request->client)->id,
-        ]);
+        DB::beginTransaction();
 
-        $order->status = 1;
-        $order->registered_by = $request->registered_by;
+        try {
+            $order = Order::create([
+                'date_order' => Carbon::now()->toDateTimeString(),
+                'total' => $request->total,
+                'route' => "Por hacer",
+                'client_id' => Client::find($request->client)->id,
+                'status' => 1,
+                'registered_by' => $request->registered_by
+            ]);
 
-        $order->save();
+            $rawProductId = $request->product_id;
+            $rawQuantity = $request->quantity;
 
-        return redirect()->route("orders.index")->with("success", "The orders has been created.");
+            for ($i = 0; $i < count($rawProductId); $i++) {
+                $product = Product::find($rawProductId[$i]);
+                $quantity = $rawQuantity[$i];
+
+                $order->orderDetails()->create([
+                    'product_id' => $product->id,
+                    'quantity' => $quantity,
+                ]);
+            }
+
+            $order->save();
+            DB::commit();
+
+            return redirect()->route("orders.index")->with("success", "The orders has been created.");
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with("success", $e->getMessage());
+        }
     }
 
     /**
@@ -60,21 +80,14 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        // Obteniendo la información del pedido junto con el cliente
-        $order = Order::select('clients.name as client_name', 'clients.document as client_document', 'orders.id', 'orders.date_order', 'orders.total')
-            ->join('clients', 'clients.id', '=', 'orders.client_id')
-            ->where('orders.id', $id)
-            ->firstOrFail();
-    
-        // Obteniendo los detalles del pedido junto con la información del producto
-        $details = OrderDetail::select('products.name as product_name', 'products.price as product_price', 'order_details.quantity')
-            ->join('products', 'order_details.product_id', '=', 'products.id')
+        $order = Order::find($id);
+        $client = Client::where("id", $order->client_id)->first();
+        $details = OrderDetail::with('product')
             ->where('order_details.order_id', '=', $id)
             ->get();
-    
-        return view("orders.show", compact("order", "details"));
+
+        return view("orders.show", compact("order", "client", "details"));
     }
-    
 
     /**
      * Show the form for editing the specified resource.

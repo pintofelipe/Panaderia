@@ -13,8 +13,6 @@ class OrderDetail extends Model
 
     protected $fillable = [
         'quantity',
-        'subtotal',
-        'registered_by',
         'product_id',
         'order_id',
     ];

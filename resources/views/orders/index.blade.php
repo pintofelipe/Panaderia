@@ -46,10 +46,10 @@
                                         @foreach ($orders as $order)
                                             <tr>
                                                 <td>{{ $order->id }}</td>
-                                                <td>{{ $order->name }}</td>
-                                                <td>{{ $order->document }}</td>
+                                                <td>{{ $order->client->name }}</td>
+                                                <td>{{ $order->client->document }}</td>
                                                 <td>{{ $order->date_order }}</td>
-                                                <td>{{ $order->total }}</td>
+                                                <td>${{ $order->total }}</td>
 
                                                 <td>
                                                     <input data-id="{{ $order->id }}" class="toggle-class"
