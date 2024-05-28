@@ -63,6 +63,12 @@
                                                         class="btn btn-primary btn-sm" title="View bill">
                                                         <i class="fa-solid fa-eye"></i>
                                                     </a>
+                                                    
+                                                    <a target="_blank" href="{{ $order->route }}" class="btn btn-primary btn-sm"
+                                                        title="Download bill">
+                                                        <i class="fa-solid fa-file-pdf"></i>
+                                                    </a>
+
                                                     <form class="d-inline delete-form"
                                                         action="{{ route('orders.destroy', $order) }}" method="POST">
                                                         @csrf

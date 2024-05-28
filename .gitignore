@@ -16,3 +16,7 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+/storage/fonts/*
+!/storage/fonts/.keep
+/public/uploads/bills/*
+!/public/uploads/bills/.keep
