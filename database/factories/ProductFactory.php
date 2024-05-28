@@ -19,7 +19,7 @@ class ProductFactory extends Factory
         return [
             'name' => $this->faker->colorName,
             'description' => $this->faker->text,
-
+            'image' => randomImage(),
             'registered_by' => \App\Models\User::factory(),
             'status' => "1",
 
@@ -29,4 +29,9 @@ class ProductFactory extends Factory
             'provider_id' => \App\Models\Provider::factory(),
         ];
     }
+}
+
+function randomImage(): string
+{
+    return "dummyImage/" . rand(1, 15) . ".jpg";
 }
