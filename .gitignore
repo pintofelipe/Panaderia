@@ -20,3 +20,14 @@ yarn-error.log
 !/storage/fonts/.keep
 /public/uploads/bills/*
 !/public/uploads/bills/.keep
+
+
+/public/uploads/**
+!/public/uploads/clients
+/public/uploads/clients/*
+!/public/uploads/clients/dummyPhoto
+!/public/uploads/clients/dummyPhoto/*
+!/public/uploads/products
+/public/uploads/products/*
+!/public/uploads/products/dummyImage
+!/public/uploads/products/dummyImage/*
