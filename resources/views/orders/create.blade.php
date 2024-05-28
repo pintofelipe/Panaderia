@@ -176,7 +176,7 @@
         const orders = []
 
         function pushOrder(order) {
-            orders.push(order)
+            orders.push(Object.assign(Object.create(Object.getPrototypeOf(order)), order))
 
             let total = 0;
             for (let order of orders) {
