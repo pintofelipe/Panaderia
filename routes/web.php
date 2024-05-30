@@ -40,4 +40,20 @@ Route::group(['middleware' => ['auth']], function () {
     // web.php
     Route::get('/changestatusproduct', [ProductController::class, 'changestatusproduct'])->name('products.changestatusproduct');
 
+
+
+});
+
+
+Route::get('/demo/error/403', function () {
+    abort(403);
+});
+Route::get('/demo/error/419', function () {
+    abort(419);
+});
+Route::get('/demo/error/500', function () {
+    abort(500);
+});
+Route::get('/demo/error/503', function () {
+    abort(503);
 });
