@@ -49,6 +49,7 @@
 
                                     <div class="row mt-2" data-details-field=true>
                                         <div class="col-3">
+                                            <label for="">product</label>
                                             <select id="product" class="form-control" name="product_id[]">
                                                 @foreach ($products as $product)
                                                     <option value="{{ $product->id }}" data-price="{{ $product->price }}"
@@ -111,7 +112,7 @@
                                                 class="btn btn-primary btn-block btn-flat">Register</button>
                                         </div>
                                         <div class="col-4">
-                                            <a href="{{ route('clients.index') }}"
+                                            <a href="{{ route('orders.index') }}"
                                                 class="btn btn-danger btn-block btn-flat">Back</a>
                                         </div>
                                     </div>
@@ -135,98 +136,108 @@
 @push('scripts')
 <script>
         class Order {
-            constructor(id, name, quantity, price) {
-                this.id = id;
-                this.name = name;
-                this.price = price;
-                this.quantity = quantity;
-            }
-
-            get subtotal() {
-                return this.price * this.quantity;
-            }
-
-            generateHTML() {
-                return `
-                <tr>
-                    <td>${this.name}</td>
-                    <td>${this.quantity}</td>
-                    <td>$${this.price}</td>
-                    <td>$${this.subtotal}</td>
-                    <input hidden name="product_id[]" value="${this.id}">
-                    <input hidden name="quantity[]" value="${this.quantity}">
-                </tr>
-                `
-            }
+        constructor(id, name, quantity, price) {
+            this.id = id;
+            this.name = name;
+            this.price = price;
+            this.quantity = quantity;
         }
 
-        // Nodes (DOM).
-        let nodeInputPrice = document.querySelector('[name="price"]')
-        let nodeInputQuantity = document.querySelector('[name="quantity"]')
-        let nodeInputSubtotal = document.querySelector('[name="subtotal"]')
-        let nodeInputTotal = document.querySelector('[name="total"]')
-        let nodeListProducts = document.querySelector('#list-products')
-
-        function clearInputFields() {
-            nodeInputPrice.value = ''
-            nodeInputQuantity.value = ''
-            nodeInputSubtotal.value = ''
+        get subtotal() {
+            return this.price * this.quantity;
         }
 
-        const orders = []
-
-        function pushOrder(order) {
-            orders.push(Object.assign(Object.create(Object.getPrototypeOf(order)), order))
-
-            let total = 0;
-            for (let order of orders) {
-                total += order.subtotal
-            }
-
-            document.querySelector('#total-text').innerText = `Total: $${total}`
-            document.querySelector('[name="total"]').value = total
-            nodeInputTotal.value = total
-
-            nodeListProducts.innerHTML += order.generateHTML()
+        generateHTML(index) {
+            return `
+            <tr data-index="${index}">
+                <td>${this.name}</td>
+                <td>${this.quantity}</td>
+                <td>$${this.price}</td>
+                <td>$${this.subtotal}</td>
+                <td><button type="button" class="btn btn-danger btn-remove" onclick="removeOrder(${index})"><i class="fas fa-trash-alt"></i></button></td>
+                <input hidden name="product_id[]" value="${this.id}">
+                <input hidden name="quantity[]" value="${this.quantity}">
+            </tr>
+            `
         }
+    }
 
-        let currentOrder = new Order("", "", 0, 0)
+    // Nodes (DOM).
+    let nodeInputPrice = document.querySelector('[name="price"]')
+    let nodeInputQuantity = document.querySelector('[name="quantity"]')
+    let nodeInputSubtotal = document.querySelector('[name="subtotal"]')
+    let nodeInputTotal = document.querySelector('[name="total"]')
+    let nodeListProducts = document.querySelector('#list-products')
 
-        function updateCurrentOrder() {
-            nodeInputPrice.value = currentOrder.price
-            nodeInputQuantity.value = currentOrder.quantity
-            nodeInputSubtotal.value = currentOrder.subtotal
-        }
+    function clearInputFields() {
+        nodeInputPrice.value = ''
+        nodeInputQuantity.value = ''
+        nodeInputSubtotal.value = ''
+    }
 
-        $(document).ready(function() {
-            $('.select2').select2()
+    const orders = []
 
-            let productSelect = $('#product')
-            productSelect.select2();
+    function pushOrder(order) {
+        orders.push(Object.assign(Object.create(Object.getPrototypeOf(order)), order))
 
-            $('#add-btn').on("click", (e) => {
-                e.preventDefault()
+        updateOrderList()
+    }
 
-                pushOrder(currentOrder)
-
-                clearInputFields()
-                productSelect.val('-')
-                productSelect.trigger('change');
-            })
-
-            productSelect.on('select2:select', function(e) {
-                currentOrder.id = parseInt(productSelect.find(':selected').val())
-                currentOrder.name = productSelect.find(':selected').data('name')
-                currentOrder.price = parseInt(productSelect.find(':selected').data('price'))
-                currentOrder.quantity = 0
-
-                updateCurrentOrder()
-            });
+    function updateOrderList() {
+        let total = 0;
+        nodeListProducts.innerHTML = ''; // Clear the list
+        orders.forEach((order, index) => {
+            total += order.subtotal
+            nodeListProducts.innerHTML += order.generateHTML(index)
         });
 
-        nodeInputQuantity.addEventListener('input', () => {
-            currentOrder.quantity = parseInt(nodeInputQuantity.value)
-            updateCurrentOrder()
+        document.querySelector('#total-text').innerText = `Total: $${total}`
+        document.querySelector('[name="total"]').value = total
+        nodeInputTotal.value = total
+    }
+
+    function removeOrder(index) {
+        orders.splice(index, 1); // Remove the order from the array
+        updateOrderList(); // Update the table and total
+    }
+
+    let currentOrder = new Order("", "", 0, 0)
+
+    function updateCurrentOrder() {
+        nodeInputPrice.value = currentOrder.price
+        nodeInputQuantity.value = currentOrder.quantity
+        nodeInputSubtotal.value = currentOrder.subtotal
+    }
+
+    $(document).ready(function() {
+        $('.select2').select2()
+
+        let productSelect = $('#product')
+        productSelect.select2();
+
+        $('#add-btn').on("click", (e) => {
+            e.preventDefault()
+
+            pushOrder(currentOrder)
+
+            clearInputFields()
+            productSelect.val('-')
+            productSelect.trigger('change');
         })
+
+        productSelect.on('select2:select', function(e) {
+            currentOrder.id = parseInt(productSelect.find(':selected').val())
+            currentOrder.name = productSelect.find(':selected').data('name')
+            currentOrder.price = parseInt(productSelect.find(':selected').data('price'))
+            currentOrder.quantity = 1
+
+            updateCurrentOrder()
+        });
+    });
+
+    nodeInputQuantity.addEventListener('input', () => {
+        currentOrder.quantity = parseInt(nodeInputQuantity.value)
+        updateCurrentOrder()
+    })
     </script>
 @endpush

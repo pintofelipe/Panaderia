@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="d-flex align-items-center justify-content-center bg-danger" style="background-image: url({{asset('backend/dist/img/espacio.jpg')}}) ; height:575px">
+<div class="d-flex align-items-center justify-content-center bg-danger" style="background-image: url({{asset('backend/dist/img/prod.jpg')}}) height:575px">
   <section class="content">
         <div class="error-page mt-5">
           <h2 class="headline text-warning"> 404</h2>

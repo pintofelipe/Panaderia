@@ -9,10 +9,11 @@ use App\Models\OrderDetail;
 use App\Models\Product;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\Pdf;
 
 use Illuminate\Support\Facades\DB;
 use \Exception;
+
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class OrderController extends Controller
 {
@@ -67,7 +68,6 @@ class OrderController extends Controller
             }
 
             $order->save();
-            DB::commit();
 
             // Generate bill (PDF).
             $pdfName = 'uploads/bills/bill_' . $order->id . '_' . Carbon::now()->format('YmdHis') . '.pdf';
@@ -82,13 +82,12 @@ class OrderController extends Controller
                 ->setPaper('letter')
                 ->output();
 
-
-
             file_put_contents($pdfName, $pdf);
 
             $order->route = $pdfName;
             $order->save();
 
+            DB::commit();
 
             return redirect()->route("orders.index")->with("success", "The orders has been created.");
         } catch (Exception $e) {
