@@ -11,74 +11,93 @@
         * {
             font-family: Arial, Helvetica, sans-serif;
             font-size: 18px;
+            color: #333;
         }
 
-        table,
-        th,
-        td {
-            border: 1px solid black;
-            border-collapse: collapse;
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        .invoice-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .invoice-header p {
+            margin: 5px 0;
         }
 
         table {
             width: 100%;
+            border: none;
+            border-spacing: 0;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         th,
         td {
-            padding: 5px;
-        }
-
-        td {
+            padding: 10px;
             text-align: left;
-
+            border-bottom: 1px solid #ddd;
         }
 
-        tr {
-            border-bottom: 1px solid #ddd;
+        th {
+            background-color: #f1c40f;
+            color: #fff;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
         }
 
         strong {
             display: block;
             text-align: center;
             margin: 30px;
-            font-size: 60px;
+            font-size: 40px;
+            color: #e67e22;
+        }
+
+        .invoice-footer {
+            text-align: center;
+            margin-top: 30px;
         }
     </style>
 </head>
 
 <body>
-    <p>
-        Date: {{ $order->date_order }}
-        <br>
-        Client: {{ $client->name }}
-        <br>
-        Document: {{ $client->document }}
-    </p>
+    <div class="invoice-header">
+        <h1>Factura de Panadería</h1>
+        <p>Fecha: {{ $order->date_order }}</p>
+        <p>Cliente: {{ $client->name }}</p>
+        <p>Documento: {{ $client->document }}</p>
+    </div>
     <table>
         <thead>
             <tr>
-                <th scope="col">Product</th>
-                <th scope="col">Price</th>
-                <th scope="col">Quantity</th>
+                <th scope="col">Producto</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Cantidad</th>
                 <th scope="col">Subtotal</th>
             </tr>
         </thead>
         <tbody>
-
             @foreach ($details as $detail)
-                <tr>
-                    <td>{{ $detail->product->name }}</td>
-                    <td> ${{ $detail->product->price }} </td>
-                    <td> {{ $detail->quantity }} </td>
-                    <td>${{ $detail->product->price * $detail->quantity }}</td>
-                </tr>
+            <tr>
+                <td>{{ $detail->product->name }}</td>
+                <td>${{ $detail->product->price }}</td>
+                <td>{{ $detail->quantity }}</td>
+                <td>${{ $detail->product->price * $detail->quantity }}</td>
+            </tr>
             @endforeach
-
         </tbody>
     </table>
-
     <strong>Total: ${{ $order->total }}</strong>
+    <div class="invoice-footer">
+        <p>Gracias por su compra!</p>
+    </div>
 </body>
 
 </html>
